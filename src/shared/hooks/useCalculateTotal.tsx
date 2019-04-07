@@ -3,10 +3,8 @@ import { useState } from "react";
 export default function useCalculateTotal(initialValue: number) {
   const [total, calculateTotal] = useState(initialValue);
 
-  const addToTotal = (price: number) =>
-    calculateTotal(Number((total + price).toFixed(2)));
-  const subtractFromTotal = (price: number) =>
-    calculateTotal(Number((total - price).toFixed(2)));
+  const addToTotal = (price: number) => calculateTotal(total + price);
+  const subtractFromTotal = (price: number) => calculateTotal(total - price);
 
   const resetTotal = () => calculateTotal(initialValue);
 
