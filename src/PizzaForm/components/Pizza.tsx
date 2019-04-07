@@ -2,14 +2,14 @@ import React from "react";
 import SVG from "react-inlinesvg";
 import styled from "@emotion/styled";
 import Topping from "./Topping";
-import { ITopping } from "../interfaces";
+import { ITopping } from "../../shared/interfaces";
 
 export default function Pizza(props: { selectedToppings: ITopping[] }) {
   return (
     <PizzaContainer>
       {props.selectedToppings &&
-        props.selectedToppings.map(({ name }) => (
-          <Topping name={name} key={name} />
+        props.selectedToppings.map(({ name, price }) => (
+          <Topping name={name} key={name} price={price} />
         ))}
       <SVG src={require("../assets/svg/pizza-with-cheese.svg")} />
     </PizzaContainer>

@@ -1,7 +1,8 @@
 import React from "react";
 import Button from "@material-ui/core/Button";
-import { toppings } from "../constants";
-import { ITopping } from "../interfaces";
+import styled from "@emotion/styled";
+import { TOPPINGS } from "../../shared/constants";
+import { ITopping } from "../../shared/interfaces";
 
 export default function SelectToppings(props: {
   selectedToppings: ITopping[];
@@ -15,8 +16,8 @@ export default function SelectToppings(props: {
     props.selectedToppings && props.selectedToppings.includes(topping);
 
   return (
-    <div>
-      {toppings.map((topping: ITopping, i: number) => (
+    <SelectToppingsContainer>
+      {TOPPINGS.map((topping: ITopping, i: number) => (
         <Button
           style={{ margin: 5 }}
           key={i}
@@ -28,6 +29,10 @@ export default function SelectToppings(props: {
           {topping.name}
         </Button>
       ))}
-    </div>
+    </SelectToppingsContainer>
   );
 }
+
+const SelectToppingsContainer = styled.div`
+  margin-bottom: 1rem;
+`;

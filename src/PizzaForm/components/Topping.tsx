@@ -1,7 +1,7 @@
 import React from "react";
 import SVG from "react-inlinesvg";
 import styled from "@emotion/styled";
-import { ITopping } from "../interfaces";
+import { ITopping } from "../../shared/interfaces";
 
 export default function Topping(props: ITopping) {
   return (
