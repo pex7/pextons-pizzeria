@@ -38,7 +38,7 @@ export default function CartItems(props: { pizzas: IPizza[] }) {
                 <Typography component="span" color="inherit">
                   {getToppingNames(pizza.toppings)}
                 </Typography>
-                ${pizza.price}
+                ${pizza.price.toFixed(2)}
               </>
             }
           />

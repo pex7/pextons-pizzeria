@@ -4,6 +4,8 @@ import Chip from "@material-ui/core/Chip";
 import Button from "@material-ui/core/Button";
 import uuid from "uuid";
 import styled from "@emotion/styled";
+import { withStyles, createStyles } from "@material-ui/core/styles";
+import { Theme } from "@material-ui/core/styles/createMuiTheme";
 import Pizza from "./Pizza";
 import SelectToppings from "./SelectToppings";
 import Total from "../../shared/components/Total";
@@ -12,7 +14,7 @@ import { CartContext } from "../../shared/components/CartProvider";
 import { ITopping, IPizza } from "../../shared/interfaces";
 import { PIZZA_PRICE } from "../../shared/constants";
 
-export default function PizzaForm() {
+export function PizzaForm(props: { classes: { root: string } }) {
   const [selectedToppings, updateToppings] = useState();
   const {
     total,
@@ -80,7 +82,7 @@ export default function PizzaForm() {
                 selectedToppings={selectedToppings}
               />
             </Grid>
-            <Grid item xs={12}>
+            <Grid item xs={12} className={props.classes.root}>
               <Total total={total} />
               <Button
                 color="secondary"
@@ -97,6 +99,17 @@ export default function PizzaForm() {
   );
 }
 
+const styles = ({ breakpoints }: Theme) =>
+  createStyles({
+    root: {
+      [breakpoints.down("xs")]: {
+        alignItems: "center",
+        display: "flex",
+        flexDirection: "column"
+      }
+    }
+  });
+
 const PizzaFormContainer = styled.div`
   padding: 0 20px;
 `;
@@ -108,3 +121,5 @@ const SelectedToppingsContainer = styled.div`
   min-height: 45px;
   padding: 10px 0;
 `;
+
+export default withStyles(styles)(PizzaForm);
