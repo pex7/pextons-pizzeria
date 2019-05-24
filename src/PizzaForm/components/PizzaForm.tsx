@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useMemo } from "react";
 import Grid from "@material-ui/core/Grid";
 import Chip from "@material-ui/core/Chip";
 import Button from "@material-ui/core/Button";
@@ -11,11 +11,11 @@ import SelectToppings from "./SelectToppings";
 import Total from "../../shared/components/Total";
 import useCalculateTotal from "../../shared/hooks/useCalculateTotal";
 import { CartContext } from "../../shared/components/CartProvider";
-import { ITopping, IPizza } from "../../shared/interfaces";
+import { ITopping } from "../../shared/interfaces";
 import { PIZZA_PRICE } from "../../shared/constants";
 
 export function PizzaForm(props: { classes: { root: string } }) {
-  const [selectedToppings, updateToppings] = useState();
+  const [selectedToppings, updateToppings] = useState<ITopping[]>([]);
   const {
     total,
     addToTotal,
@@ -31,6 +31,19 @@ export function PizzaForm(props: { classes: { root: string } }) {
     updateToppings(newToppings);
     subtractFromTotal(topping.price);
   };
+
+  const renderToppingChips = () =>
+    selectedToppings.map((topping: ITopping) => (
+      <ChipContainer key={topping.id}>
+        <Chip
+          color="secondary"
+          label={topping.name}
+          onDelete={deleteTopping(topping)}
+        />
+      </ChipContainer>
+    ));
+
+  useMemo(renderToppingChips, [selectedToppings]);
 
   const addTopping = (topping: ITopping) => {
     let newToppings;
@@ -49,7 +62,7 @@ export function PizzaForm(props: { classes: { root: string } }) {
       price: total,
       toppings: selectedToppings
     };
-    updateCart((items: IPizza[]) => [...items, pizza]);
+    updateCart([...cartItems, pizza]);
     updateToppings([]);
     resetTotal();
   };
@@ -59,16 +72,7 @@ export function PizzaForm(props: { classes: { root: string } }) {
       <Grid container>
         <Grid item xs={12}>
           <SelectedToppingsContainer>
-            {selectedToppings &&
-              selectedToppings.map((topping: ITopping, i: number) => (
-                <Chip
-                  key={i}
-                  style={{ margin: 5 }}
-                  color="secondary"
-                  label={topping.name}
-                  onDelete={deleteTopping(topping)}
-                />
-              ))}
+            {selectedToppings && renderToppingChips()}
           </SelectedToppingsContainer>
         </Grid>
         <Grid item xs={12} sm={6}>
@@ -120,6 +124,10 @@ const SelectedToppingsContainer = styled.div`
   align-items: center;
   min-height: 45px;
   padding: 10px 0;
+`;
+
+const ChipContainer = styled.div`
+  margin: 5px;
 `;
 
 export default withStyles(styles)(PizzaForm);

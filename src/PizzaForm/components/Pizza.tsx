@@ -8,8 +8,8 @@ export default function Pizza(props: { selectedToppings: ITopping[] }) {
   return (
     <PizzaContainer>
       {props.selectedToppings &&
-        props.selectedToppings.map(({ name, price }) => (
-          <Topping name={name} key={name} price={price} />
+        props.selectedToppings.map(({ id, name, price }) => (
+          <Topping id={id} key={id} name={name} price={price} />
         ))}
       <SVG src={require("../assets/svg/pizza-with-cheese.svg")} />
     </PizzaContainer>

@@ -17,10 +17,10 @@ export default function SelectToppings(props: {
 
   return (
     <SelectToppingsContainer>
-      {TOPPINGS.map((topping: ITopping, i: number) => (
+      {TOPPINGS.map((topping: ITopping) => (
         <Button
           style={{ margin: 5 }}
-          key={i}
+          key={topping.id}
           variant="outlined"
           color="secondary"
           onClick={selectTopping(topping)}
